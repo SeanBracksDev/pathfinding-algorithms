@@ -1,14 +1,12 @@
 # Example file showing a circle moving on screen
 
-from queue import PriorityQueue
-
 import pygame
 
 from algorithms import a_star_step
 from node import Colour, Node, NodeType
 
 GRID_DIMENSION = 1000
-GRID_COLS = 8
+GRID_COLS = 20
 CELL_DIMENSION = GRID_DIMENSION // GRID_COLS
 
 # pygame setup
@@ -50,7 +48,9 @@ cells = [[Node(x, y, CELL_DIMENSION) for y in range(GRID_COLS)] for x in range(G
 screen = pygame.display.set_mode((GRID_DIMENSION, GRID_DIMENSION))
 clock = pygame.time.Clock()
 start_cell, finish_cell = None, None
-current_cell, visited_cells, queued_cells = None, None, None
+current_cell = None
+visited_cells = set()
+queued_cells = []
 running = True
 
 dt = 0
@@ -76,7 +76,6 @@ while running:
                     elif not finish_cell:
                         if cell.update_type(NodeType.FINISH):
                             finish_cell = cell
-                            visited_cells = set()
                             queued_cells = []
                     else:
                         cell.update_type(NodeType.WALL)
