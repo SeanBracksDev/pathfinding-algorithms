@@ -8,8 +8,8 @@ def a_star_step(
     current_node: Node,
     finish_node: Node,
     visited_nodes: set[Node],
-    queue: list[int, Node],
-) -> tuple[list[list[Node]], set[Node], list[int, Node]]:
+    queue: list[tuple[int, Node]],
+) -> tuple[Node, list[list[Node]], set[Node], list[tuple[int, Node]]]:
     """Performs one step of the A* algorithm
 
     :param list[list[Node]] nodes: list of list of nodes
@@ -17,7 +17,7 @@ def a_star_step(
     :param Node finish: finish node
     :param set[Node] visited: visited nodes
     :param PriorityQueue[int, Node] queue: queue of nodes to visit, ordered by a* heuristic
-    :return Node, tuple[list[list[Node]], set[Node], PriorityQueue[int, Node]]: new_current_cell, updated cells, visited nodes, queue
+    :return Node, tuple[list[list[Node]], set[Node], list[tuple[int, Node]]: new_current_cell, updated cells, visited nodes, queue
     """
 
     def h(p1: tuple[int, int], p2: tuple[int, int]):
@@ -42,7 +42,6 @@ def a_star_step(
             nodes[neighbour.x][neighbour.y].weight = _f
             if (_f, neighbour) not in queue:
                 heappush(queue, (_f, neighbour))
-    print(queue)
     new_current_node = heappop(queue)[1]
     current_node.update_type(NodeType.VISITED)
     new_current_node.update_type(NodeType.CURRENT)
