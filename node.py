@@ -26,19 +26,18 @@ class NodeType(enum.Enum):
     START = 3
     FINISH = 4
     CURRENT = 5
-    NEIGHBOUR = 6  # TODO REMOVE
 
 
 class Node:
     """Node which represents a cell in the grid"""
 
     def __init__(self, x: int, y: int, dimension: int, node_type: NodeType = NodeType.UNVISITED) -> None:
-        self.x = x
-        self.y = y
-        self.node_type = node_type
-        self.last_updated = 0
-        self.dimension = dimension
-        self.weight = None
+        self.x: int = x
+        self.y: int = y
+        self.node_type: NodeType = node_type
+        self.last_updated: int = 0
+        self.dimension: int = dimension
+        self.weight: int | None = None
 
     def draw(self, window):
         """draws the node on the screen
@@ -58,8 +57,6 @@ class Node:
                 colour = Colour.RED
             case NodeType.CURRENT:
                 colour = Colour.PURPLE
-            case NodeType.NEIGHBOUR:  # TODO REMOVE
-                colour = Colour.ORANGE
 
         pygame.draw.rect(
             window, colour.value, (self.x * self.dimension, self.y * self.dimension, self.dimension, self.dimension)
